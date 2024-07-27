@@ -1,0 +1,51 @@
+{
+  "alias": "restapi",
+  "prefix": "api",
+  "mountAppAsRoot": true,
+  "exposeHead": true,
+  "enablePatch": false,
+  "bodyLimit": 1048576,
+  "i18n": {
+    "detectors": ["qs", "header"],
+    "defaultNs": ["bajoDb", "wakatobiRestApi"]
+  },
+  "format": {
+    "supported": ["json", "xml"],
+    "asExt": false,
+    "xml": {
+      "bodyParser": {
+        "contentTypes": ["text/xml", "application/xml", "application/rss+xml"],
+        "validate": false
+      },
+      "response": {
+        "wrapper": "doc",
+        "declaration": true,
+        "valueAsAttributes": true
+      }
+    }
+  },
+  "responseKey": {
+    "data": "data",
+    "oldData": "oldData",
+    "page": "page",
+    "count": "count",
+    "pages": "pages",
+    "success": "success",
+    "statusCode": "code",
+    "error": "error",
+    "cached": "cached",
+    "message": "message",
+    "details": "details"
+  },
+  "mapSlash": "~",
+  "mapDot": ",",
+  "multipart": {
+  },
+  "cors": {},
+  "helmet": {},
+  "compress": false,
+  "rateLimit": false,
+  "disabled": [],
+  "rerouted": {},
+  "dependencies": ["bajo-db", "bajo-extra"]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "wakatobi-rest-api",
+  "version": "1.0.0",
+  "description": "REST API for Wakatobi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ardhi/wakatobi-rest-api.git"
+  },
+  "keywords": [
+    "restapi",
+    "web",
+    "webserver",
+    "bajo",
+    "framework",
+    "fastify",
+    "modular"
+  ],
+  "author": "Ardhi Lukianto <ardhi@lukianto.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ardhi/wakatobi-rest-api/issues"
+  },
+  "homepage": "https://github.com/ardhi/wakatobi-rest-api#readme"
+}
