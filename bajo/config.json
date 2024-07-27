@@ -1,5 +1,5 @@
 {
-  "alias": "restapi",
+  "alias": "wktbrestapi",
   "prefix": "api",
   "mountAppAsRoot": true,
   "exposeHead": true,

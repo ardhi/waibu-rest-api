@@ -1,6 +1,6 @@
 # wakatobi-rest-api
 
-Plugin name: **wakatobiRestApi**, alias: **restapi**
+Plugin name: **wakatobiRestApi**, alias: **wktbrestapi**
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/ardhi/wakatobi-rest-api) ![NPM Version](https://img.shields.io/npm/v/wakatobi-rest-api)
 
