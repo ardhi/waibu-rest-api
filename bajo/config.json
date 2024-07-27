@@ -47,5 +47,5 @@
   "rateLimit": false,
   "disabled": [],
   "rerouted": {},
-  "dependencies": ["bajo-db", "bajo-extra"]
+  "dependencies": ["bajo-db", "bajo-extra", "wakatobi"]
 }
