@@ -12,7 +12,10 @@
     "url": "git+https://github.com/ardhi/waibu-rest-api.git"
   },
   "keywords": [
+    "api",
+    "restful",
     "restapi",
+    "waibu",
     "web",
     "webserver",
     "bajo",
