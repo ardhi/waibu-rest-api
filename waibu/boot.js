@@ -1,13 +1,13 @@
 import path from 'path'
 import decorate from '../lib/decorate.js'
-import routeByCollBuilder from '../lib/route-by-coll-builder.js'
+import routeByModelBuilder from '../lib/route-by-model-builder.js'
 import routeByVerb from '../lib/route-by-verb.js'
 import notFound from '../lib/not-found.js'
 import error from '../lib/error.js'
 import subApp from '../lib/sub-app.js'
 import handleResponse from '../lib/handle-response.js'
 
-const routeActions = { routeByCollBuilder, routeByVerb }
+const routeActions = { routeByModelBuilder, routeByVerb }
 
 function formatExt (item) {
   return item + '.:format'
@@ -56,14 +56,14 @@ const boot = {
         const appPrefix = '/' + (ns === this.app.bajo.mainNs && cfg.mountAppAsRoot ? '' : alias)
         const pattern = [
           `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
-          `${dir}/${pathPrefix}/**/coll-builder.*`
+          `${dir}/${pathPrefix}/**/model-builder.*`
         ]
         const files = await fastGlob(pattern)
         if (files.length === 0) return undefined
         await ctx.register(async (appCtx) => {
           for (const file of files) {
             const base = path.basename(file, path.extname(file))
-            const action = base === 'coll-builder' ? 'routeByCollBuilder' : 'routeByVerb'
+            const action = base === 'model-builder' ? 'routeByModelBuilder' : 'routeByVerb'
             let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias })
             if (!Array.isArray(mods)) mods = [mods]
             for (const mod of mods) {

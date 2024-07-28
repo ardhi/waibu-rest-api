@@ -19,7 +19,7 @@ function returnError ({ data, req, reply, options = {} }) {
   data.error = this.print.write(map(errNames, s => upperFirst(s)).join(' '))
   data.success = false
   data.statusCode = data.statusCode ?? 500
-  if (reply && cfgWeb.dbColl.dataOnly) {
+  if (reply && cfgWeb.dbModel.dataOnly) {
     each(keys(data), k => {
       const key = get(cfg, `responseKey.${k}`, k)
       if (k === 'details' && !isEmpty(data[k])) data[k] = JSON.stringify(data[k])
@@ -27,7 +27,7 @@ function returnError ({ data, req, reply, options = {} }) {
     })
   }
   reply.code(data.statusCode)
-  const result = cfgWeb.dbColl.dataOnly ? { error: data.message } : data
+  const result = cfgWeb.dbModel.dataOnly ? { error: data.message } : data
   return reformat.call(this, { data: result, req, reply, options })
 }
 
@@ -38,7 +38,7 @@ function returnSuccess ({ data, req, reply, options = {} }) {
   const cfgWeb = this.app.waibu.config
   if (reply) {
     reply.code(req.method.toUpperCase() === 'POST' ? 201 : 200)
-    if (cfgWeb.dbColl.dataOnly) {
+    if (cfgWeb.dbModel.dataOnly) {
       each(keys(omit(data, ['data'])), k => {
         const key = get(cfg, `responseKey.${k}`, k)
         reply.header(`X-${pascalCase(this.alias)}-${pascalCase(key)}`, data[k])
