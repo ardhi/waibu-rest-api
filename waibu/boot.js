@@ -18,21 +18,21 @@ const boot = {
   handler: async function () {
     const { importPkg, eachPlugins, importModule, runHook } = this.app.bajo
     const { fastGlob } = this.app.bajo.lib
-    const [bodyParser, accepts] = await importPkg('wakatobi:@fastify/formbody', 'wakatobi:@fastify/accepts')
+    const [bodyParser, accepts] = await importPkg('waibu:@fastify/formbody', 'waibu:@fastify/accepts')
     const cfg = this.config
     const pathPrefix = `${this.name}/route`
     let prefix = cfg.prefix === '' ? '' : ('/' + cfg.prefix)
     if (cfg.i18n.detectors.includes('path')) prefix = `/:lang${prefix}`
-    const routeHook = await importModule('wakatobi:/lib/webapp-scope/route-hook.js')
-    const handleMultipart = await importModule('wakatobi:/lib/webapp-scope/handle-multipart-body.js')
-    const handleXmlBody = await importModule('wakatobi:/lib/handle-xml-body.js')
-    const handleCors = await importModule('wakatobi:/lib/webapp-scope/handle-cors.js')
-    const handleHelmet = await importModule('wakatobi:/lib/webapp-scope/handle-helmet.js')
-    const handleCompress = await importModule('wakatobi:/lib/webapp-scope/handle-compress.js')
-    const handleRateLimit = await importModule('wakatobi:/lib/webapp-scope/handle-rate-limit.js')
-    const reroutedPath = await importModule('wakatobi:/lib/webapp-scope/rerouted-path.js')
+    const routeHook = await importModule('waibu:/lib/webapp-scope/route-hook.js')
+    const handleMultipart = await importModule('waibu:/lib/webapp-scope/handle-multipart-body.js')
+    const handleXmlBody = await importModule('waibu:/lib/handle-xml-body.js')
+    const handleCors = await importModule('waibu:/lib/webapp-scope/handle-cors.js')
+    const handleHelmet = await importModule('waibu:/lib/webapp-scope/handle-helmet.js')
+    const handleCompress = await importModule('waibu:/lib/webapp-scope/handle-compress.js')
+    const handleRateLimit = await importModule('waibu:/lib/webapp-scope/handle-rate-limit.js')
+    const reroutedPath = await importModule('waibu:/lib/webapp-scope/rerouted-path.js')
     const me = this
-    await this.app.wakatobi.instance.register(async (ctx) => {
+    await this.app.waibu.instance.register(async (ctx) => {
       this.instance = ctx
       await runHook(`${this.name}:afterCreateContext`, ctx)
       await routeHook.call(this, this.name)
@@ -68,7 +68,7 @@ const boot = {
             if (!Array.isArray(mods)) mods = [mods]
             for (const mod of mods) {
               const fullPath = appPrefix === '/' ? mod.url : (appPrefix + mod.url)
-              const isRouteDisabled = await importModule('wakatobi:/lib/webapp-scope/is-route-disabled.js')
+              const isRouteDisabled = await importModule('waibu:/lib/webapp-scope/is-route-disabled.js')
               if (await isRouteDisabled.call(this, fullPath, mod.method, cfg.disabled)) {
                 this.log.warn('Route %s (%s) is disabled', `${prefix}${fullPath}`, mod.method)
                 continue

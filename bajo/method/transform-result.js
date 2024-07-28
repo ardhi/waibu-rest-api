@@ -13,7 +13,7 @@ function returnError ({ data, req, reply, options = {} }) {
   const { pascalCase } = this.app.bajo
   const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.app.bajo.lib._
   const cfg = this.config
-  const cfgWeb = this.app.wakatobi.config
+  const cfgWeb = this.app.waibu.config
   const errNames = kebabCase(data.constructor.name).split('-')
   if (last(errNames) === 'error') errNames.pop()
   data.error = this.print.write(map(errNames, s => upperFirst(s)).join(' '))
@@ -35,7 +35,7 @@ function returnSuccess ({ data, req, reply, options = {} }) {
   const { pascalCase } = this.app.bajo
   const { each, keys, omit, get } = this.app.bajo.lib._
   const cfg = this.config
-  const cfgWeb = this.app.wakatobi.config
+  const cfgWeb = this.app.waibu.config
   if (reply) {
     reply.code(req.method.toUpperCase() === 'POST' ? 201 : 200)
     if (cfgWeb.dbColl.dataOnly) {

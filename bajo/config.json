@@ -1,5 +1,5 @@
 {
-  "alias": "wktbrestapi",
+  "alias": "wbrestapi",
   "prefix": "api",
   "mountAppAsRoot": true,
   "exposeHead": true,
@@ -7,7 +7,7 @@
   "bodyLimit": 1048576,
   "i18n": {
     "detectors": ["qs", "header"],
-    "defaultNs": ["dobo", "wakatobiRestApi"]
+    "defaultNs": ["dobo", "waibuRestApi"]
   },
   "format": {
     "supported": ["json", "xml"],
@@ -47,5 +47,5 @@
   "rateLimit": false,
   "disabled": [],
   "rerouted": {},
-  "dependencies": ["bajo-db", "bajo-extra", "wakatobi"]
+  "dependencies": ["dobo", "bajo-extra", "waibu"]
 }

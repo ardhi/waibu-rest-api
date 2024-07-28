@@ -1,7 +1,7 @@
 {
-  "name": "wakatobi-rest-api",
+  "name": "waibu-rest-api",
   "version": "1.0.0",
-  "description": "REST API for Wakatobi",
+  "description": "REST API for Waibu",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ardhi/wakatobi-rest-api.git"
+    "url": "git+https://github.com/ardhi/waibu-rest-api.git"
   },
   "keywords": [
     "restapi",
@@ -23,7 +23,7 @@
   "author": "Ardhi Lukianto <ardhi@lukianto.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ardhi/wakatobi-rest-api/issues"
+    "url": "https://github.com/ardhi/waibu-rest-api/issues"
   },
-  "homepage": "https://github.com/ardhi/wakatobi-rest-api#readme"
+  "homepage": "https://github.com/ardhi/waibu-rest-api#readme"
 }
