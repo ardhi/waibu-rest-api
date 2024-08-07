@@ -35,6 +35,7 @@ const boot = {
     await this.app.waibu.instance.register(async (ctx) => {
       this.instance = ctx
       await runHook(`${this.name}:afterCreateContext`, ctx)
+      await this.docSchemaGeneral(ctx)
       await routeHook.call(this, this.name)
       await decorate.call(this, ctx)
       if (cfg.format.supported.includes('xml')) {
