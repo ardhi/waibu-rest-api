@@ -50,7 +50,7 @@ async function buildErrResp (ctx) {
 async function buildFilter (ctx) {
   await this.docSchemaParams(ctx, 'qsFilter',
     'query||NQL/Mongo Query. Leave empty to disable query',
-    'limit|integer|Number of records per page. Must be >= 1|' + this.app.dobo.config.defaults.filter.limit,
+    'limit|integer|Number of records per page. Must be >= 1|' + this.app.dobo.config.default.filter.limit,
     'page|integer|Desired page number. Must be >= 1|1',
     'sort||Order of records, format: &lt;field&gt;:&lt;dir&gt;[,&lt;field&gt;:&lt;dir&gt;,[...]]',
     'fields||Comma delimited fields to show. Leave empty to show all fields',
