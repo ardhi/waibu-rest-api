@@ -15,14 +15,10 @@ function formatExt (item) {
 
 const boot = {
   level: 10,
-  handler: async function () {
+  handler: async function (ctx, prefix) {
     const { importPkg, eachPlugins, importModule, runHook } = this.app.bajo
     const { fastGlob } = this.app.bajo.lib
     const [bodyParser, accepts] = await importPkg('waibu:@fastify/formbody', 'waibu:@fastify/accepts')
-    const cfg = this.config
-    const pathPrefix = `${this.name}/route`
-    let prefix = cfg.prefix === '' ? '' : ('/' + cfg.prefix)
-    if (cfg.i18n.detectors.includes('path')) prefix = `/:lang${prefix}`
     const routeHook = await importModule('waibu:/lib/webapp-scope/route-hook.js')
     const handleMultipart = await importModule('waibu:/lib/webapp-scope/handle-multipart-body.js')
     const handleXmlBody = await importModule('waibu:/lib/handle-xml-body.js')
@@ -31,65 +27,64 @@ const boot = {
     const handleCompress = await importModule('waibu:/lib/webapp-scope/handle-compress.js')
     const handleRateLimit = await importModule('waibu:/lib/webapp-scope/handle-rate-limit.js')
     const reroutedPath = await importModule('waibu:/lib/webapp-scope/rerouted-path.js')
+
+    const pathPrefix = `${this.name}/route`
+    await this.docSchemaGeneral(ctx)
+    await routeHook.call(this, this.name)
+    await decorate.call(this, ctx)
+    if (this.config.format.supported.includes('xml')) {
+      await handleXmlBody.call(this, ctx, this.config.format.xml.bodyParser)
+    }
+    await ctx.register(accepts)
+    await ctx.register(bodyParser)
+    await handleRateLimit.call(this, ctx, this.config.rateLimit)
+    await handleCors.call(this, ctx, this.config.cors)
+    await handleHelmet.call(this, ctx, this.config.helmet)
+    await handleMultipart.call(this, ctx, this.config.multipart)
+    await handleCompress.call(this, ctx, this.config.compress)
+    await handleResponse.call(this, ctx)
+    await error.call(this, ctx)
+    await runHook(`${this.name}:beforeCreateRoutes`, ctx)
+    const actions = ['find', 'get', 'create', 'update', 'remove']
+    if (this.config.enablePatch) actions.push('replace')
     const me = this
-    await this.app.waibu.instance.register(async (ctx) => {
-      this.instance = ctx
-      await runHook(`${this.name}:afterCreateContext`, ctx)
-      await this.docSchemaGeneral(ctx)
-      await routeHook.call(this, this.name)
-      await decorate.call(this, ctx)
-      if (cfg.format.supported.includes('xml')) {
-        await handleXmlBody.call(this, ctx, cfg.format.xml.bodyParser)
-      }
-      await ctx.register(accepts)
-      await ctx.register(bodyParser)
-      await handleRateLimit.call(this, ctx, cfg.rateLimit)
-      await handleCors.call(this, ctx, cfg.cors)
-      await handleHelmet.call(this, ctx, cfg.helmet)
-      await handleMultipart.call(this, ctx, cfg.multipart)
-      await handleCompress.call(this, ctx, cfg.compress)
-      await handleResponse.call(this, ctx)
-      await error.call(this, ctx)
-      await runHook(`${this.name}:beforeCreateRoutes`, ctx)
-      const actions = ['find', 'get', 'create', 'update', 'remove']
-      if (cfg.enablePatch) actions.push('replace')
-      await eachPlugins(async function ({ dir, alias, ns }) {
-        const appPrefix = '/' + (ns === this.app.bajo.mainNs && cfg.mountAppAsRoot ? '' : alias)
-        const pattern = [
-          `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
-          `${dir}/${pathPrefix}/**/model-builder.*`
-        ]
-        const files = await fastGlob(pattern)
-        if (files.length === 0) return undefined
-        await ctx.register(async (appCtx) => {
-          for (const file of files) {
-            const base = path.basename(file, path.extname(file))
-            const action = base === 'model-builder' ? 'routeByModelBuilder' : 'routeByVerb'
-            let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias })
-            if (!Array.isArray(mods)) mods = [mods]
-            for (const mod of mods) {
-              const fullPath = appPrefix === '/' ? mod.url : (appPrefix + mod.url)
-              const isRouteDisabled = await importModule('waibu:/lib/webapp-scope/is-route-disabled.js')
-              if (await isRouteDisabled.call(this, fullPath, mod.method, cfg.disabled)) {
-                this.log.warn('Route %s (%s) is disabled', `${prefix}${fullPath}`, mod.method)
-                continue
-              }
-              const rpath = await reroutedPath.call(this, fullPath, cfg.rerouted)
-              if (cfg.format.asExt) mod.url = formatExt(mod.url)
-              if (rpath) {
-                mod.config.pathReroutedTo = rpath
-                this.log.warn('Rerouted %s -> %s', `${prefix}${fullPath}`, `${prefix}${rpath}`)
-                mod.url = cfg.format.asExt ? formatExt(rpath) : rpath
-                await ctx.route(mod)
-              } else await appCtx.route(mod)
+
+    await eachPlugins(async function ({ dir, alias, ns }) {
+      const appPrefix = '/' + (ns === me.app.bajo.mainNs && me.config.mountAppAsRoot ? '' : alias)
+      const pattern = [
+        `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
+        `${dir}/${pathPrefix}/**/model-builder.*`
+      ]
+      const files = await fastGlob(pattern)
+      if (files.length === 0) return undefined
+      await ctx.register(async (appCtx) => {
+        for (const file of files) {
+          const base = path.basename(file, path.extname(file))
+          const action = base === 'model-builder' ? 'routeByModelBuilder' : 'routeByVerb'
+          let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias })
+          if (!Array.isArray(mods)) mods = [mods]
+          for (const mod of mods) {
+            const fullPath = appPrefix === '/' ? mod.url : (appPrefix + mod.url)
+            const isRouteDisabled = await importModule('waibu:/lib/webapp-scope/is-route-disabled.js')
+            if (await isRouteDisabled.call(this, fullPath, mod.method, me.config.disabled)) {
+              this.log.warn('Route %s (%s) is disabled', `${prefix}${fullPath}`, mod.method)
+              continue
             }
+            const rpath = await reroutedPath.call(this, fullPath, me.config.rerouted)
+            if (me.config.format.asExt) mod.url = formatExt(mod.url)
+            if (rpath) {
+              mod.config.pathReroutedTo = rpath
+              this.log.warn('Rerouted %s -> %s', `${prefix}${fullPath}`, `${prefix}${rpath}`)
+              mod.url = me.config.format.asExt ? formatExt(rpath) : rpath
+              await ctx.route(mod)
+            } else await appCtx.route(mod)
           }
-        }, { prefix: appPrefix })
-      })
-      await runHook(`${this.name}:afterCreateRoutes`, ctx)
-      await subApp.call(this, ctx)
-      await notFound.call(this, ctx)
-    }, { prefix })
+        }
+      }, { prefix: appPrefix })
+    })
+    await runHook(`${this.name}:afterCreateRoutes`, ctx)
+    await subApp.call(this, ctx)
+    await notFound.call(this, ctx)
   }
 }
 
