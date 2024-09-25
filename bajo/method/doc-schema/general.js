@@ -1,7 +1,7 @@
 async function buildErrResp (ctx) {
   const { cloneDeep, merge, each, get } = this.app.bajo.lib._
   const cfg = this.config
-  const cfgWeb = this.app.waibu.config
+  const cfgWdb = this.app.waibuDb.config
   const def = {
     type: 'object',
     properties: {
@@ -36,7 +36,7 @@ async function buildErrResp (ctx) {
         }
       })
     }
-    if (cfgWeb.dbModel.dataOnly) item.properties = { error: item.properties.message }
+    if (cfgWdb.dbModel.dataOnly) item.properties = { error: item.properties.message }
     const props = {}
     each(item.properties, (v, k) => {
       const key = get(cfg, `responseKey.${k}`, k)

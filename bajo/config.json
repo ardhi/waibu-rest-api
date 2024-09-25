@@ -1,5 +1,5 @@
 {
-  "alias": "wbrest",
+  "alias": "wrest",
   "prefix": "api",
   "mountAppAsRoot": true,
   "exposeHead": true,
@@ -47,5 +47,5 @@
   "rateLimit": false,
   "disabled": [],
   "rerouted": {},
-  "dependencies": ["dobo", "bajo-extra", "waibu"]
+  "dependencies": ["waibu-db", "bajo-extra", "waibu"]
 }

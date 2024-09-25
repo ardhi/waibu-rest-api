@@ -1,6 +1,6 @@
 # waibu-rest-api
 
-Plugin name: **waibuRestApi**, alias: **wbrest**
+Plugin name: **waibuRestApi**, alias: **wrest**
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/ardhi/waibu-rest-api) ![NPM Version](https://img.shields.io/npm/v/waibu-rest-api)
 

@@ -47,7 +47,7 @@ async function buildPropsReqs ({ schema, method, options = {} }) {
 async function buildResponse ({ ctx, schema, method, options }) {
   const { merge, cloneDeep } = this.app.bajo.lib._
   const { transformResult } = this.app.waibuRestApi
-  const cfgWeb = this.app.waibu.config
+  const cfgWdb = this.app.waibuDb.config
   const { properties } = await buildPropsReqs.call(this, { schema, method, options })
 
   async function buildData (keys) {
@@ -80,7 +80,7 @@ async function buildResponse ({ ctx, schema, method, options }) {
     description: this.print.write('General error response'),
     $ref: '5xxResp#'
   }
-  if (cfgWeb.dbModel.dataOnly) {
+  if (cfgWdb.dbModel.dataOnly) {
     if (method === 'find') {
       result['2xx'] = {
         type: 'array',

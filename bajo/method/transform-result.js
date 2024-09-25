@@ -13,13 +13,13 @@ function returnError ({ data, req, reply, options = {} }) {
   const { pascalCase } = this.app.bajo
   const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.app.bajo.lib._
   const cfg = this.config
-  const cfgWeb = this.app.waibu.config
+  const cfgWdb = this.app.waibuDb.config
   const errNames = kebabCase(data.constructor.name).split('-')
   if (last(errNames) === 'error') errNames.pop()
   data.error = this.print.write(map(errNames, s => upperFirst(s)).join(' '))
   data.success = false
   data.statusCode = data.statusCode ?? 500
-  if (reply && cfgWeb.dbModel.dataOnly) {
+  if (reply && cfgWdb.dbModel.dataOnly) {
     each(keys(data), k => {
       const key = get(cfg, `responseKey.${k}`, k)
       if (k === 'details' && !isEmpty(data[k])) data[k] = JSON.stringify(data[k])
@@ -27,7 +27,7 @@ function returnError ({ data, req, reply, options = {} }) {
     })
   }
   reply.code(data.statusCode)
-  const result = cfgWeb.dbModel.dataOnly ? { error: data.message } : data
+  const result = cfgWdb.dbModel.dataOnly ? { error: data.message } : data
   return reformat.call(this, { data: result, req, reply, options })
 }
 
@@ -35,10 +35,10 @@ function returnSuccess ({ data, req, reply, options = {} }) {
   const { pascalCase } = this.app.bajo
   const { each, keys, omit, get } = this.app.bajo.lib._
   const cfg = this.config
-  const cfgWeb = this.app.waibu.config
+  const cfgWdb = this.app.waibuDb.config
   if (reply) {
     reply.code(req.method.toUpperCase() === 'POST' ? 201 : 200)
-    if (cfgWeb.dbModel.dataOnly) {
+    if (cfgWdb.dbModel.dataOnly) {
       each(keys(omit(data, ['data'])), k => {
         const key = get(cfg, `responseKey.${k}`, k)
         reply.header(`X-${pascalCase(this.alias)}-${pascalCase(key)}`, data[k])
