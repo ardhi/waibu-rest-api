@@ -50,7 +50,7 @@ const boot = {
     const me = this
 
     await eachPlugins(async function ({ dir, alias, ns }) {
-      const appPrefix = '/' + (ns === me.app.bajo.mainNs && me.config.mountAppAsRoot ? '' : alias)
+      const appPrefix = '/' + (ns === me.app.bajo.mainNs && me.config.mountMainAsRoot ? '' : alias)
       const pattern = [
         `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
         `${dir}/${pathPrefix}/**/model-builder.*`

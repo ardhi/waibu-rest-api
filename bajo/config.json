@@ -1,7 +1,7 @@
 {
   "alias": "wrest",
   "prefix": "api",
-  "mountAppAsRoot": true,
+  "mountMainAsRoot": true,
   "exposeHead": true,
   "enablePatch": false,
   "bodyLimit": 1048576,
