@@ -50,7 +50,7 @@ const boot = {
     const me = this
 
     await eachPlugins(async function ({ dir, alias, ns }) {
-      const appPrefix = '/' + (ns === me.app.bajo.mainNs && me.config.mountMainAsRoot ? '' : alias)
+      const appPrefix = '/' + (ns === me.app.bajo.mainNs && me.config.mountMainAsRoot ? '' : this.config.prefix)
       const pattern = [
         `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
         `${dir}/${pathPrefix}/**/model-builder.*`
@@ -61,7 +61,7 @@ const boot = {
         for (const file of files) {
           const base = path.basename(file, path.extname(file))
           const action = base === 'model-builder' ? 'routeByModelBuilder' : 'routeByVerb'
-          let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias })
+          let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias, parent: me.name })
           if (!Array.isArray(mods)) mods = [mods]
           for (const mod of mods) {
             const fullPath = appPrefix === '/' ? mod.url : (appPrefix + mod.url)

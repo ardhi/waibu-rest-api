@@ -1,5 +1,4 @@
 {
-  "alias": "wrest",
   "prefix": "api",
   "mountMainAsRoot": true,
   "exposeHead": true,
