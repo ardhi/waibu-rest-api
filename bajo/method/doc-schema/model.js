@@ -13,7 +13,7 @@ async function buildPropsReqs ({ schema, method, options = {} }) {
   const properties = {}
   const required = []
   const rels = {}
-  const hidden = options.hidden ?? []
+  const hidden = [...schema.hidden, ...(options.hidden ?? [])] ?? []
   for (const p of schema.properties) {
     if (hidden.includes(p.name)) continue
     properties[p.name] = { type: getType(p.type) }
