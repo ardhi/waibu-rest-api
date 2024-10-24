@@ -1,5 +1,7 @@
 {
-  "prefix": "api",
+  "waibu": {
+    "prefix": "api"
+  },
   "mountMainAsRoot": true,
   "exposeHead": true,
   "enablePatch": false,
