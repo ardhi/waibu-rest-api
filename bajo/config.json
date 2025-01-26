@@ -47,6 +47,5 @@
   "compress": false,
   "rateLimit": false,
   "disabled": [],
-  "rerouted": {},
-  "dependencies": ["waibu-db", "bajo-extra", "waibu"]
+  "rerouted": {}
 }
