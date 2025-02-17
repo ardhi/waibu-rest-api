@@ -51,7 +51,7 @@ const boot = {
     const me = this
 
     await eachPlugins(async function ({ dir, alias, ns }) {
-      const appPrefix = '/' + (ns === me.app.bajo.mainNs && me.config.mountMainAsRoot ? '' : getPluginPrefix(ns))
+      const appPrefix = '/' + (ns === me.app.bajo.mainNs && getPluginPrefix(ns, 'waibuRestApi'))
       const pattern = [
         `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
         `${dir}/${pathPrefix}/**/model-builder.*`
