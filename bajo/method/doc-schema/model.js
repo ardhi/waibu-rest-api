@@ -66,18 +66,18 @@ async function buildResponse ({ ctx, schema, method, options }) {
 
   const result = {
     '2xx': {
-      description: this.print.write('Successfull response'),
+      description: this.print.write('successfulResponse'),
       type: 'object'
     }
   }
   if (['create', 'update', 'replace'].includes(method)) {
     result['4xx'] = {
-      description: this.print.write('Document error response'),
+      description: this.print.write('docErrorResponse'),
       $ref: '4xxResp#'
     }
   }
   result['5xx'] = {
-    description: this.print.write('General error response'),
+    description: this.print.write('generalErrorResponse'),
     $ref: '5xxResp#'
   }
   if (cfgWdb.dbModel.dataOnly) {

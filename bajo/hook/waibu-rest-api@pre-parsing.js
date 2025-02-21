@@ -7,7 +7,7 @@ const waibuRestApiPreParsing = {
     reply.header('Content-Language', req.lang)
     if (this.config.format.asExt && req.params.format) {
       if (!this.config.format.supported.includes(req.params.format)) {
-        throw this.error('Unsupported format \'%s\'', req.params.format, { statusCode: 406 })
+        throw this.error('unsupportedFormat%s', req.params.format, { statusCode: 406 })
       }
     }
   }

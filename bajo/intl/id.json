@@ -1,3 +1,6 @@
 {
-  "Unprocessable Entity Error": "Kesalahan Entitas yang Tidak Dapat Diproses"
+  "unsupportedFormat%s": "Format tidak didukung '%s'",
+  "successfulResponse": "Respon sukses",
+  "docErrorResponse": "Respon kesalahan dokumen",
+  "generalErrorResponse": "Respon kesalahan umum"
 }

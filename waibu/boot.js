@@ -68,14 +68,14 @@ const boot = {
             const fullPath = appPrefix === '/' ? mod.url : (appPrefix + mod.url)
             const isRouteDisabled = await importModule('waibu:/lib/webapp-scope/is-route-disabled.js')
             if (await isRouteDisabled.call(this, fullPath, mod.method, me.config.disabled)) {
-              this.log.warn('Route %s (%s) is disabled', `${prefix}${fullPath}`, mod.method)
+              this.log.warn('routeDisabled%s%s', `${prefix}${fullPath}`, mod.method)
               continue
             }
             const rpath = await reroutedPath.call(this, fullPath, me.config.rerouted)
             if (me.config.format.asExt) mod.url = formatExt(mod.url)
             if (rpath) {
               mod.config.pathReroutedTo = rpath
-              this.log.warn('Rerouted %s -> %s', `${prefix}${fullPath}`, `${prefix}${rpath}`)
+              this.log.warn('rerouted%s%s', `${prefix}${fullPath}`, `${prefix}${rpath}`)
               mod.url = me.config.format.asExt ? formatExt(rpath) : rpath
               await ctx.route(mod)
             } else await appCtx.route(mod)

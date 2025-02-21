@@ -1,0 +1,6 @@
+{
+  "unsupportedFormat%s": "Unsupported format '%s'",
+  "successfulResponse": "Successfull response",
+  "docErrorResponse": "Document error response",
+  "generalErrorResponse": "General error response"
+}
