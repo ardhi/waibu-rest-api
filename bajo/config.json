@@ -6,9 +6,8 @@
   "exposeHead": true,
   "enablePatch": false,
   "bodyLimit": 1048576,
-  "i18n": {
-    "detectors": ["qs", "header"],
-    "defaultNs": ["dobo", "waibuRestApi"]
+  "intl": {
+    "detectors": ["qs", "header"]
   },
   "format": {
     "supported": ["json", "xml"],
