@@ -2,8 +2,8 @@ const waibuRestApiPreParsing = {
   level: 9,
   handler: async function (req, reply) {
     const { importModule } = this.app.bajo
-    const attachI18N = await importModule('waibu:/lib/webapp-scope/attach-intl.js')
-    await attachI18N.call(this, this.config.intl.detectors, req, reply)
+    const attachIntl = await importModule('waibu:/lib/webapp-scope/attach-intl.js')
+    await attachIntl.call(this, this.config.intl.detectors, req, reply)
     reply.header('Content-Language', req.lang)
     if (this.config.format.asExt && req.params.format) {
       if (!this.config.format.supported.includes(req.params.format)) {
