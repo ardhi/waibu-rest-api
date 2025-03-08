@@ -1,0 +1,134 @@
+async function factory (pkgName) {
+  const me = this
+
+  return class WaibuRestApi extends this.lib.BajoPlugin {
+    constructor () {
+      super(pkgName, me.app)
+      this.alias = 'wra'
+      this.dependencies = ['waibu', 'waibu-db', 'bajo-extra']
+      this.routePathHandlers = ['restapi']
+      this.config = {
+        waibu: {
+          prefix: 'api'
+        },
+        mountMainAsRoot: true,
+        exposeHead: true,
+        enablePatch: false,
+        bodyLimit: 1048576,
+        intl: {
+          detectors: ['qs', 'header']
+        },
+        format: {
+          supported: ['json', 'xml'],
+          asExt: false,
+          xml: {
+            bodyParser: {
+              contentTypes: ['text/xml', 'application/xml', 'application/rss+xml'],
+              validate: false
+            },
+            response: {
+              wrapper: 'doc',
+              declaration: true,
+              valueAsAttributes: true
+            }
+          }
+        },
+        responseKey: {
+          data: 'data',
+          oldData: 'oldData',
+          page: 'page',
+          count: 'count',
+          pages: 'pages',
+          success: 'success',
+          statusCode: 'code',
+          error: 'error',
+          cached: 'cached',
+          message: 'message',
+          details: 'details'
+        },
+        mapSlash: '~',
+        mapDot: ',',
+        multipart: {
+        },
+        cors: {},
+        helmet: {},
+        compress: false,
+        rateLimit: false,
+        disabled: [],
+        rerouted: {}
+      }
+    }
+
+    init = async () => {
+      const { uniq } = this.app.bajo.lib._
+      this.config.format.supported.push('json')
+      this.config.format.supported = uniq(this.config.format.supported)
+    }
+
+    routePath = (name) => {
+      const { get } = this.app.bajo.lib._
+      const { fullPath, ns } = this.app.bajo.breakNsPath(name)
+      const prefix = get(this.app[ns], 'config.waibu.prefix', this.app[ns].alias)
+      return `/${this.config.waibu.prefix}/${prefix}${fullPath}${this.config.format.asExt ? '.json' : ''}`
+    }
+
+    transformResult = ({ data, req, reply, options = {} }) => {
+      const reformat = ({ data, req, reply, options = {} }) => {
+        const { forOwn, get } = this.app.bajo.lib._
+        const newData = {}
+        forOwn(data, (v, k) => {
+          let key = get(this.config, `responseKey.${k}`, k)
+          if (options.forFind && k === 'data') key = get(this.config, 'responseKey.data')
+          newData[key] = v
+        })
+        return newData
+      }
+
+      const returnError = ({ data, req, reply, options = {} }) => {
+        const { pascalCase } = this.app.bajo
+        const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.app.bajo.lib._
+        const cfg = this.config
+        const cfgWdb = this.app.waibuDb.config
+        const errNames = kebabCase(data.constructor.name).split('-')
+        if (last(errNames) === 'error') errNames.pop()
+        data.error = this.print.write(map(errNames, s => upperFirst(s)).join(' '))
+        data.success = false
+        data.statusCode = data.statusCode ?? 500
+        if (reply && cfgWdb.dbModel.dataOnly) {
+          each(keys(data), k => {
+            const key = get(cfg, `responseKey.${k}`, k)
+            if (k === 'details' && !isEmpty(data[k])) data[k] = JSON.stringify(data[k])
+            reply.header(`X-${pascalCase(this.alias)}-${pascalCase(key)}`, data[k])
+          })
+        }
+        reply.code(data.statusCode)
+        const result = cfgWdb.dbModel.dataOnly ? { error: data.message } : data
+        return reformat.call(this, { data: result, req, reply, options })
+      }
+
+      const returnSuccess = ({ data, req, reply, options = {} }) => {
+        const { pascalCase } = this.app.bajo
+        const { each, keys, omit, get } = this.app.bajo.lib._
+        const cfg = this.config
+        const cfgWdb = this.app.waibuDb.config
+        if (reply) {
+          reply.code(req.method.toUpperCase() === 'POST' ? 201 : 200)
+          if (cfgWdb.dbModel.dataOnly) {
+            each(keys(omit(data, ['data'])), k => {
+              const key = get(cfg, `responseKey.${k}`, k)
+              reply.header(`X-${pascalCase(this.alias)}-${pascalCase(key)}`, data[k])
+            })
+            return data.data
+          }
+        }
+        return reformat({ data, req, reply, options })
+      }
+
+      const isError = data instanceof Error
+      if (isError) return returnError({ data, req, reply, options })
+      return returnSuccess({ data, req, reply, options })
+    }
+  }
+}
+
+export default factory
