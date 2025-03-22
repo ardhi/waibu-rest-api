@@ -60,13 +60,13 @@ async function factory (pkgName) {
     }
 
     init = async () => {
-      const { uniq } = this.app.bajo.lib._
+      const { uniq } = this.lib._
       this.config.format.supported.push('json')
       this.config.format.supported = uniq(this.config.format.supported)
     }
 
     routePath = (name, { defFormat = '.json' } = {}) => {
-      const { get, trimStart } = this.app.bajo.lib._
+      const { get, trimStart } = this.lib._
       const { fullPath, ns } = this.app.bajo.breakNsPath(name)
       const prefix = get(this.app[ns], 'config.waibu.prefix', this.app[ns].alias)
       const format = defFormat === false ? '' : (this.config.format.asExt ? defFormat : '')
@@ -76,7 +76,7 @@ async function factory (pkgName) {
 
     transformResult = ({ data, req, reply, options = {} }) => {
       const reformat = ({ data, req, reply, options = {} }) => {
-        const { forOwn, get } = this.app.bajo.lib._
+        const { forOwn, get } = this.lib._
         const newData = {}
         forOwn(data, (v, k) => {
           let key = get(this.config, `responseKey.${k}`, k)
@@ -88,7 +88,7 @@ async function factory (pkgName) {
 
       const returnError = ({ data, req, reply, options = {} }) => {
         const { pascalCase } = this.app.bajo
-        const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.app.bajo.lib._
+        const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
         const errNames = kebabCase(data.constructor.name).split('-')
@@ -110,7 +110,7 @@ async function factory (pkgName) {
 
       const returnSuccess = ({ data, req, reply, options = {} }) => {
         const { pascalCase } = this.app.bajo
-        const { each, keys, omit, get } = this.app.bajo.lib._
+        const { each, keys, omit, get } = this.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
         if (reply) {

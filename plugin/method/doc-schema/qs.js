@@ -1,5 +1,5 @@
 async function buildParams (ctx, paramName, ...args) {
-  const { each, isEmpty } = this.app.bajo.lib._
+  const { each, isEmpty } = this.lib._
   const item = {
     type: 'object',
     properties: {}

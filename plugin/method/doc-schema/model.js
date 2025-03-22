@@ -45,7 +45,7 @@ async function buildPropsReqs ({ schema, method, options = {} }) {
 }
 
 async function buildResponse ({ ctx, schema, method, options }) {
-  const { merge, cloneDeep } = this.app.bajo.lib._
+  const { merge, cloneDeep } = this.lib._
   const { transformResult } = this.app.waibuRestApi
   const cfgWdb = this.app.waibuDb.config
   const { properties } = await buildPropsReqs.call(this, { schema, method, options })
@@ -113,7 +113,7 @@ async function buildResponse ({ ctx, schema, method, options }) {
 async function docSchemaModel ({ model, method, ctx, options = {} }) {
   const { getInfo } = this.app.dobo
   const { schema } = getInfo(model)
-  const { omit } = this.app.bajo.lib._
+  const { omit } = this.lib._
   const out = {
     description: options.description ?? this.docSchemaDescription(method),
     tags: [this.alias.toUpperCase(), ...(options.alias ?? [])]

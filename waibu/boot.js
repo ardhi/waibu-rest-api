@@ -17,7 +17,7 @@ const boot = {
   level: 10,
   handler: async function (ctx, prefix) {
     const { importPkg, eachPlugins, importModule, runHook } = this.app.bajo
-    const { fastGlob } = this.app.bajo.lib
+    const { fastGlob } = this.lib
     const { getPluginPrefix } = this.app.waibu
     const [bodyParser, accepts] = await importPkg('waibu:@fastify/formbody', 'waibu:@fastify/accepts')
     const routeHook = await importModule('waibu:/lib/webapp-scope/route-hook.js')

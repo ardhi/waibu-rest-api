@@ -1,5 +1,5 @@
 async function buildParams (ctx, paramName, ...args) {
-  const { each, isEmpty, keys, last, isBoolean } = this.app.bajo.lib._
+  const { each, isEmpty, keys, last, isBoolean } = this.lib._
   const cfgWeb = this.app.waibu.config
   let transform = false
   if (isBoolean(last(args))) {
