@@ -17,6 +17,9 @@ async function buildPropsReqs ({ schema, method, options = {} }) {
   for (const p of schema.properties) {
     if (hidden.includes(p.name)) continue
     properties[p.name] = { type: getType(p.type) }
+    if (properties[p.name].type === 'object') {
+      properties[p.name].additionalProperties = true
+    }
     if (!p.required) properties[p.name].nullable = true
     else if (method === 'create' && p.name !== 'id') required.push(p.name)
     if (['datetime'].includes(p.type)) properties[p.name].format = 'date-time'
