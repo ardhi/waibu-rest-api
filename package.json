@@ -1,6 +1,6 @@
 {
   "name": "waibu-rest-api",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "REST API for Waibu",
   "main": "index.js",
   "scripts": {
