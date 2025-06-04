@@ -65,12 +65,13 @@ async function factory (pkgName) {
       this.config.format.supported = uniq(this.config.format.supported)
     }
 
-    routePath = (name, { defFormat = '.json' } = {}) => {
+    routePath = (name, { defFormat = '.json', uriEncoded = true } = {}) => {
       const { get, trimStart } = this.lib._
       const { fullPath, ns } = this.app.bajo.breakNsPath(name)
       const prefix = get(this.app[ns], 'config.waibu.prefix', this.app[ns].alias)
       const format = defFormat === false ? '' : (this.config.format.asExt ? defFormat : '')
-      const path = `/${this.config.waibu.prefix}/${prefix}${fullPath}${format}`
+      let path = `/${this.config.waibu.prefix}/${prefix}${fullPath}${format}`
+      if (uriEncoded) path = path.split('/').map(p => encodeURI(p)).join('/')
       return '/' + trimStart(path, '/')
     }
 
