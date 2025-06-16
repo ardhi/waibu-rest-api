@@ -88,7 +88,7 @@ async function factory (pkgName) {
       }
 
       const returnError = ({ data, req, reply, options = {} }) => {
-        const { pascalCase } = this.app.bajo
+        const { pascalCase } = this.lib.aneka
         const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
@@ -110,7 +110,7 @@ async function factory (pkgName) {
       }
 
       const returnSuccess = ({ data, req, reply, options = {} }) => {
-        const { pascalCase } = this.app.bajo
+        const { pascalCase } = this.lib.aneka
         const { each, keys, omit, get } = this.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
