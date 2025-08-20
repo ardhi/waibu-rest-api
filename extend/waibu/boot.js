@@ -1,11 +1,11 @@
 import path from 'path'
-import decorate from '../lib/decorate.js'
-import routeByModelBuilder from '../lib/route-by-model-builder.js'
-import routeByVerb from '../lib/route-by-verb.js'
-import notFound from '../lib/not-found.js'
-import error from '../lib/error.js'
-import subApp from '../lib/sub-app.js'
-import handleResponse from '../lib/handle-response.js'
+import decorate from '../../lib/decorate.js'
+import routeByModelBuilder from '../../lib/route-by-model-builder.js'
+import routeByVerb from '../../lib/route-by-verb.js'
+import notFound from '../../lib/not-found.js'
+import error from '../../lib/error.js'
+import subApp from '../../lib/sub-app.js'
+import handleResponse from '../../lib/handle-response.js'
 
 const routeActions = { routeByModelBuilder, routeByVerb }
 
@@ -53,8 +53,8 @@ const boot = {
     await eachPlugins(async function ({ dir, alias, ns }) {
       const appPrefix = '/' + (ns === me.app.bajo.mainNs ? '' : getPluginPrefix(ns, 'waibuRestApi'))
       const pattern = [
-        `${dir}/${pathPrefix}/**/{${actions.join(',')}}.js`,
-        `${dir}/${pathPrefix}/**/model-builder.*`
+        `${dir}/extend/${pathPrefix}/**/{${actions.join(',')}}.js`,
+        `${dir}/extend/${pathPrefix}/**/model-builder.*`
       ]
       const files = await fastGlob(pattern)
       if (files.length === 0) return undefined
