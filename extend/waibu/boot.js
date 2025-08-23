@@ -50,7 +50,8 @@ const boot = {
     if (this.config.enablePatch) actions.push('replace')
     const me = this
 
-    await eachPlugins(async function ({ dir, alias, ns }) {
+    await eachPlugins(async function ({ dir }) {
+      const { name: ns, alias } = this
       const appPrefix = '/' + (ns === me.app.bajo.mainNs ? '' : getPluginPrefix(ns, 'waibuRestApi'))
       const pattern = [
         `${dir}/extend/${pathPrefix}/**/{${actions.join(',')}}.js`,
