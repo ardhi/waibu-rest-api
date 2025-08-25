@@ -1,11 +1,12 @@
 async function factory (pkgName) {
   const me = this
 
-  return class WaibuRestApi extends this.lib.Plugin {
+  class WaibuRestApi extends this.lib.Plugin {
+    static alias = 'wra'
+    static dependencies = ['waibu', 'waibu-db', 'bajo-extra']
+
     constructor () {
       super(pkgName, me.app)
-      this.alias = 'wra'
-      this.dependencies = ['waibu', 'waibu-db', 'bajo-extra']
       this.routePathHandlers = ['restapi']
       this.config = {
         waibu: {
@@ -132,6 +133,8 @@ async function factory (pkgName) {
       return returnSuccess({ data, req, reply, options })
     }
   }
+
+  return WaibuRestApi
 }
 
 export default factory
