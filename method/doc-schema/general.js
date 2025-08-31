@@ -1,5 +1,5 @@
 async function buildErrResp (ctx) {
-  const { cloneDeep, merge, each, get } = this.lib._
+  const { cloneDeep, merge, each, get } = this.app.lib._
   const cfg = this.config
   const cfgWdb = this.app.waibuDb.config
   const def = {

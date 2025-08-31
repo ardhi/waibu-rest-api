@@ -17,7 +17,7 @@ const boot = {
   level: 10,
   handler: async function (ctx, prefix) {
     const { importPkg, eachPlugins, importModule, runHook } = this.app.bajo
-    const { fastGlob } = this.lib
+    const { fastGlob } = this.app.lib
     const { getPluginPrefix } = this.app.waibu
     const [bodyParser, accepts] = await importPkg('waibu:@fastify/formbody', 'waibu:@fastify/accepts')
     const routeHook = await importModule('waibu:/lib/webapp-scope/route-hook.js')
@@ -52,7 +52,7 @@ const boot = {
 
     await eachPlugins(async function ({ dir }) {
       const { name: ns, alias } = this
-      const appPrefix = '/' + (ns === me.app.bajo.mainNs ? '' : getPluginPrefix(ns, 'waibuRestApi'))
+      const appPrefix = '/' + (ns === me.app.mainNs ? '' : getPluginPrefix(ns, 'waibuRestApi'))
       const pattern = [
         `${dir}/extend/${pathPrefix}/**/{${actions.join(',')}}.js`,
         `${dir}/extend/${pathPrefix}/**/model-builder.*`

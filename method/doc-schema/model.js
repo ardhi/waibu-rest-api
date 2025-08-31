@@ -48,7 +48,7 @@ async function buildPropsReqs ({ schema, method, options = {} }) {
 }
 
 async function buildResponse ({ ctx, schema, method, options }) {
-  const { merge, cloneDeep } = this.lib._
+  const { merge, cloneDeep } = this.app.lib._
   const { transformResult } = this.app.waibuRestApi
   const cfgWdb = this.app.waibuDb.config
   const { properties } = await buildPropsReqs.call(this, { schema, method, options })
@@ -69,18 +69,18 @@ async function buildResponse ({ ctx, schema, method, options }) {
 
   const result = {
     '2xx': {
-      description: this.print.write('successfulResponse'),
+      description: this.t('successfulResponse'),
       type: 'object'
     }
   }
   if (['create', 'update', 'replace'].includes(method)) {
     result['4xx'] = {
-      description: this.print.write('docErrorResponse'),
+      description: this.t('docErrorResponse'),
       $ref: '4xxResp#'
     }
   }
   result['5xx'] = {
-    description: this.print.write('generalErrorResponse'),
+    description: this.t('generalErrorResponse'),
     $ref: '5xxResp#'
   }
   if (cfgWdb.dbModel.dataOnly) {
@@ -116,7 +116,7 @@ async function buildResponse ({ ctx, schema, method, options }) {
 async function docSchemaModel ({ model, method, ctx, options = {} }) {
   const { getInfo } = this.app.dobo
   const { schema } = getInfo(model)
-  const { omit } = this.lib._
+  const { omit } = this.app.lib._
   const out = {
     description: options.description ?? this.docSchemaDescription(method),
     tags: [this.alias.toUpperCase(), ...(options.alias ?? [])]

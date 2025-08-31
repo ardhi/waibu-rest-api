@@ -1,5 +1,5 @@
 async function docSchemaLib (ctx, name, obj) {
-  const { merge } = this.lib._
+  const { merge } = this.app.lib._
   if (ctx.getSchema(name)) return
   const value = merge({}, obj, { $id: name })
   ctx.addSchema(value)

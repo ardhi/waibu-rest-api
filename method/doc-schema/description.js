@@ -7,7 +7,7 @@ const desc = {
 }
 
 function docDescription (method) {
-  return this.print.write(desc[method])
+  return this.t(desc[method])
 }
 
 export default docDescription

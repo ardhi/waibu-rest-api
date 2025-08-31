@@ -1,7 +1,7 @@
 async function factory (pkgName) {
   const me = this
 
-  class WaibuRestApi extends this.lib.Plugin {
+  class WaibuRestApi extends this.app.pluginClass.base {
     static alias = 'wra'
     static dependencies = ['waibu', 'waibu-db', 'bajo-extra']
 
@@ -61,13 +61,13 @@ async function factory (pkgName) {
     }
 
     init = async () => {
-      const { uniq } = this.lib._
+      const { uniq } = this.app.lib._
       this.config.format.supported.push('json')
       this.config.format.supported = uniq(this.config.format.supported)
     }
 
     routePath = (name, { defFormat = '.json', uriEncoded = true } = {}) => {
-      const { get, trimStart } = this.lib._
+      const { get, trimStart } = this.app.lib._
       const { fullPath, ns } = this.app.bajo.breakNsPath(name)
       const prefix = get(this.app[ns], 'config.waibu.prefix', this.app[ns].alias)
       const format = defFormat === false ? '' : (this.config.format.asExt ? defFormat : '')
@@ -78,7 +78,7 @@ async function factory (pkgName) {
 
     transformResult = ({ data, req, reply, options = {} }) => {
       const reformat = ({ data, req, reply, options = {} }) => {
-        const { forOwn, get } = this.lib._
+        const { forOwn, get } = this.app.lib._
         const newData = {}
         forOwn(data, (v, k) => {
           let key = get(this.config, `responseKey.${k}`, k)
@@ -89,13 +89,13 @@ async function factory (pkgName) {
       }
 
       const returnError = ({ data, req, reply, options = {} }) => {
-        const { pascalCase } = this.lib.aneka
-        const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.lib._
+        const { pascalCase } = this.app.lib.aneka
+        const { last, map, kebabCase, upperFirst, keys, each, get, isEmpty } = this.app.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
         const errNames = kebabCase(data.constructor.name).split('-')
         if (last(errNames) === 'error') errNames.pop()
-        data.error = this.print.write(map(errNames, s => upperFirst(s)).join(' '))
+        data.error = this.t(map(errNames, s => upperFirst(s)).join(' '))
         data.success = false
         data.statusCode = data.statusCode ?? 500
         if (reply && cfgWdb.dbModel.dataOnly) {
@@ -111,8 +111,8 @@ async function factory (pkgName) {
       }
 
       const returnSuccess = ({ data, req, reply, options = {} }) => {
-        const { pascalCase } = this.lib.aneka
-        const { each, keys, omit, get } = this.lib._
+        const { pascalCase } = this.app.lib.aneka
+        const { each, keys, omit, get } = this.app.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
         if (reply) {

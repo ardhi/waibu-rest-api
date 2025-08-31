@@ -1,5 +1,5 @@
 async function buildParams (ctx, paramName, ...args) {
-  const { each, isEmpty, keys, last, isBoolean } = this.lib._
+  const { each, isEmpty, keys, last, isBoolean } = this.app.lib._
   const cfgWeb = this.app.waibu.getConfig()
   let transform = false
   if (isBoolean(last(args))) {
@@ -12,7 +12,7 @@ async function buildParams (ctx, paramName, ...args) {
   each(args, a => {
     let [name, type, description, def] = a.split('|')
     if (isEmpty(type)) type = 'string'
-    item.properties[name] = { type, description: this.print.write(description), default: def }
+    item.properties[name] = { type, description: this.t(description), default: def }
   })
   if (transform) {
     each(keys(cfgWeb.qsKey), k => {
