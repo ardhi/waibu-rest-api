@@ -29,9 +29,9 @@ const boot = {
     const handleRateLimit = await importModule('waibu:/lib/webapp-scope/handle-rate-limit.js')
     const reroutedPath = await importModule('waibu:/lib/webapp-scope/rerouted-path.js')
 
-    const pathPrefix = `${this.name}/route`
+    const pathPrefix = `${this.ns}/route`
     await this.docSchemaGeneral(ctx)
-    await routeHook.call(this, this.name)
+    await routeHook.call(this, this.ns)
     await decorate.call(this, ctx)
     if (this.config.format.supported.includes('xml')) {
       await handleXmlBody.call(this, ctx, this.config.format.xml.bodyParser)
@@ -45,13 +45,13 @@ const boot = {
     await handleCompress.call(this, ctx, this.config.compress)
     await handleResponse.call(this, ctx)
     await error.call(this, ctx)
-    await runHook(`${this.name}:beforeCreateRoutes`, ctx)
+    await runHook(`${this.ns}:beforeCreateRoutes`, ctx)
     const actions = ['find', 'get', 'create', 'update', 'remove']
     if (this.config.enablePatch) actions.push('replace')
     const me = this
 
     await eachPlugins(async function ({ dir }) {
-      const { name: ns, alias } = this
+      const { ns, alias } = this
       const appPrefix = '/' + (ns === me.app.mainNs ? '' : getPluginPrefix(ns, 'waibuRestApi'))
       const pattern = [
         `${dir}/extend/${pathPrefix}/**/{${actions.join(',')}}.js`,
@@ -63,7 +63,7 @@ const boot = {
         for (const file of files) {
           const base = path.basename(file, path.extname(file))
           const action = base === 'model-builder' ? 'routeByModelBuilder' : 'routeByVerb'
-          let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias, parent: me.name })
+          let mods = await routeActions[action].call(me, { file, appCtx, ctx, dir, pathPrefix, ns, alias, parent: me.ns })
           if (!Array.isArray(mods)) mods = [mods]
           for (const mod of mods) {
             const fullPath = appPrefix === '/' ? mod.url : (appPrefix + mod.url)
@@ -84,7 +84,7 @@ const boot = {
         }
       }, { prefix: appPrefix })
     })
-    await runHook(`${this.name}:afterCreateRoutes`, ctx)
+    await runHook(`${this.ns}:afterCreateRoutes`, ctx)
     await subApp.call(this, ctx)
     await notFound.call(this, ctx)
   }
