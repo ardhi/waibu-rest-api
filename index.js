@@ -1,6 +1,17 @@
+/**
+ * Plugin factory
+ *
+ * @param {string} pkgName - NPM package name
+ * @returns {class}
+ */
 async function factory (pkgName) {
   const me = this
 
+  /**
+   * WaibuRestApi class
+   *
+   * @class
+   */
   class WaibuRestApi extends this.app.pluginClass.base {
     static alias = 'wra'
     static dependencies = ['waibu', 'waibu-db', 'bajo-extra']

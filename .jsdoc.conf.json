@@ -1,0 +1,44 @@
+{
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "encoding": "utf8",
+    "recurse": true,
+    "verbose": true,
+    "destination": "./docs",
+    "template": "node_modules/clean-jsdoc-theme",
+    "tutorials": "./tutorial",
+    "readme": "./docs-static/home.md",
+    "theme_opts": {
+      "static_dir": ["./docs-static"],
+      "sections": ["Tutorials", "Classes", "Events", "Modules", "Global"],
+      "default_theme": "light",
+      "display-module-header": true,
+      "title": "Waibu REST Api",
+      "homepageTitle": "Waibu REST Api",
+      "menu": [{
+        "title": "Waibu",
+        "link": "https://bajo.app/waibu"
+      }, {
+        "title": "NPM",
+        "link": "https://www.npmjs.com/package/waibu-rest-api"
+      }, {
+        "title": "Github",
+        "link": "https://github.com/ardhi/waibu-rest-api"
+      }]
+    }
+  },
+  "source": {
+    "include": ["."],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "exclude": ["node_modules", "docs", "test"]
+  },
+  "markdown": {
+    "hardwrap": false,
+    "idInHeadings": true
+  },
+  "sourceType": "module",
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
