@@ -4,9 +4,9 @@ Waibu Web Framework
 
 ## Applications
 
-- [Multi Page Application - waibu-mpa](https://ardhi.github.com/waibu-mpa)
-- [REST Api Framework - waibu-rest-api](https://ardhi.github.com/waibu-rest-api)
-- [Static Resource - waibu-static](https://ardhi.github.com/waibu-static)
+- [Multi Page Application - waibu-mpa](https://ardhi.github.io/waibu-mpa)
+- [REST Api Framework - waibu-rest-api](https://ardhi.github.io/waibu-rest-api)
+- [Static Resource - waibu-static](https://ardhi.github.io/waibu-static)
 
 ## Donations
 
