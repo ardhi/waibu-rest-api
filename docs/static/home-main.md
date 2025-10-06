@@ -24,5 +24,5 @@ Please support me using the channels below. Your donation will motivate me to wo
 </a>
 
 <p>
-<div><img alt="bc1qwtv78cwp9ef8hnqaw84fxg5856l0pggqe32g6f" src="docs/static/bitcoin.jpeg" width="150" height="150" /><br>Bitcoin</div>
+<div><img alt="bc1qwtv78cwp9ef8hnqaw84fxg5856l0pggqe32g6f" src="static/bitcoin.jpeg" width="150" height="150" /><br>Bitcoin</div>
 </p>
