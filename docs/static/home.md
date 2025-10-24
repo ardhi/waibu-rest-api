@@ -1,5 +1,4 @@
-<p><img alt="Waibu Web Framework" src="static/logo-ecosystem.png" width="200" /></p>
-- [Contributing](CONTRIBUTING.md)
+<p><img alt="Waibu Web Framework" src="static/logo-ecosystem.png" height="200" /></p>
 
 ## Hire Me
 
