@@ -2,5 +2,10 @@
   "unsupportedFormat%s": "Format tidak didukung '%s'",
   "successfulResponse": "Respon sukses",
   "docErrorResponse": "Respon kesalahan dokumen",
-  "generalErrorResponse": "Respon kesalahan umum"
+  "generalErrorResponse": "Respon kesalahan umum",
+  "postRecordWithBody": "Post a record with body payload",
+  "findRecordsWithFilter": "Find record(s) with filter",
+  "getRecordById": "Get record by ID",
+  "updateRecordByIdWithBody": "Update record by ID with partial/full body payload",
+  "removeRecordById": "Remove record by ID"
 }

@@ -1,3 +1,11 @@
+import docSchemaDescription from './lib/doc-schema/description.js'
+import docSchemaForFind from './lib/doc-schema/for-find.js'
+import docSchemaGeneral from './lib/doc-schema/general.js'
+import docSchemaLib from './lib/doc-schema/lib.js'
+import docSchemaModel from './lib/doc-schema/model.js'
+import docSchemaParams from './lib/doc-schema/params.js'
+import docSchemaQs from './lib/doc-schema/qs.js'
+
 /**
  * Plugin factory
  *
@@ -12,7 +20,7 @@ async function factory (pkgName) {
    *
    * @class
    */
-  class WaibuRestApi extends this.app.pluginClass.base {
+  class WaibuRestApi extends this.app.baseClass.Base {
     static alias = 'wra'
     static dependencies = ['waibu', 'waibu-db', 'bajo-extra']
 
@@ -69,6 +77,16 @@ async function factory (pkgName) {
         disabled: [],
         rerouted: {}
       }
+
+      this.selfBind([
+        'docSchemaDescription',
+        'docSchemaForFind',
+        'docSchemaGeneral',
+        'docSchemaLib',
+        'docSchemaModel',
+        'docSchemaParams',
+        'docSchemaQs'
+      ])
     }
 
     init = async () => {
@@ -143,6 +161,14 @@ async function factory (pkgName) {
       if (isError) return returnError({ data, req, reply, options })
       return returnSuccess({ data, req, reply, options })
     }
+
+    docSchemaDescription = docSchemaDescription
+    docSchemaForFind = docSchemaForFind
+    docSchemaGeneral = docSchemaGeneral
+    docSchemaLib = docSchemaLib
+    docSchemaModel = docSchemaModel
+    docSchemaParams = docSchemaParams
+    docSchemaQs = docSchemaQs
   }
 
   return WaibuRestApi

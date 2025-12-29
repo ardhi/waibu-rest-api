@@ -2,5 +2,10 @@
   "unsupportedFormat%s": "Unsupported format '%s'",
   "successfulResponse": "Successfull response",
   "docErrorResponse": "Document error response",
-  "generalErrorResponse": "General error response"
+  "generalErrorResponse": "General error response",
+  "postRecordWithBody": "Post a record with body payload",
+  "findRecordsWithFilter": "Find record(s) with filter",
+  "getRecordById": "Get record by ID",
+  "updateRecordByIdWithBody": "Update record by ID with partial/full body payload",
+  "removeRecordById": "Remove record by ID"
 }
