@@ -9,7 +9,13 @@
   },
   "type": "module",
   "bajo": {
-    "type": "plugin"
+    "type": "plugin",
+    "alias": "wra",
+    "dependencies": [
+      "waibu",
+      "waibu-db",
+      "bajo-extra"
+    ]
   },
   "repository": {
     "type": "git",

@@ -21,9 +21,6 @@ async function factory (pkgName) {
    * @class
    */
   class WaibuRestApi extends this.app.baseClass.Base {
-    static alias = 'wra'
-    static dependencies = ['waibu', 'waibu-db', 'bajo-extra']
-
     constructor () {
       super(pkgName, me.app)
       this.routePathHandlers = ['restapi']
