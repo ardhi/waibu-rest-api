@@ -1,6 +1,10 @@
 # Changes
 
-## 2026-12-16
+## 2026-01-24
+
+- [2.2.0] Add ```hooks``` property to model builder that will be considered as dynamic hoooks by models
+
+## 2026-01-16
 
 - [2.1.1] Bug fix on model references
 
