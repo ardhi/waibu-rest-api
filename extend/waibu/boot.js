@@ -2,8 +2,8 @@ import path from 'path'
 import decorate from '../../lib/decorate.js'
 import routeByModelBuilder from '../../lib/route-by-model-builder.js'
 import routeByVerb from '../../lib/route-by-verb.js'
-// import notFound from '../../lib/not-found.js'
-// import error from '../../lib/error.js'
+import notFoundHandler from '../../lib/not-found.js'
+import errorHandler from '../../lib/error.js'
 import subApp from '../../lib/sub-app.js'
 import handleResponse from '../../lib/handle-response.js'
 
@@ -15,6 +15,8 @@ function formatExt (item) {
 
 const boot = {
   level: 10,
+  notFoundHandler,
+  errorHandler,
   handler: async function (prefix) {
     const { importPkg, eachPlugins, importModule, runHook } = this.app.bajo
     const { fastGlob } = this.app.lib
@@ -44,7 +46,6 @@ const boot = {
     await handleMultipart.call(this, this.config.multipart)
     await handleCompress.call(this, this.config.compress)
     await handleResponse.call(this)
-    // await error.call(this)
     await runHook(`${this.ns}:beforeCreateRoutes`, this.webAppCtx)
     const actions = ['find', 'get', 'create', 'update', 'remove']
     if (this.config.enablePatch) actions.push('replace')
@@ -86,7 +87,6 @@ const boot = {
     })
     await runHook(`${this.ns}:afterCreateRoutes`, this.webAppCtx)
     await subApp.call(this)
-    // await notFound.call(this)
   }
 }
 

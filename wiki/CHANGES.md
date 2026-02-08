@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-09
+
+- [2.4.0] Add error & not found handlers
+
 ## 2026-02-08
 
 - [2.3.0] Simplify webApp context through ```plugin.webAppCtx```
