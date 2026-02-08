@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-08
+
+- [2.3.0] Simplify webApp context through ```plugin.webAppCtx```
+
 ## 2026-01-30
 
 - [2.2.1] Bug fix if output format is in xml
