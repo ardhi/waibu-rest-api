@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-22
+
+- [2.5.0] Add warnings to the response objects
+
 ## 2026-02-09
 
 - [2.4.0] Add error & not found handlers

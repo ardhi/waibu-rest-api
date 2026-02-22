@@ -61,6 +61,7 @@ async function factory (pkgName) {
           error: 'error',
           cached: 'cached',
           message: 'message',
+          warnings: 'warnings',
           details: 'details'
         },
         mapSlash: '~',
