@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-02-23
+
+- [2.5.1] Bug fix on ```transformResult()```
+
 ## 2026-02-22
 
 - [2.5.0] Add warnings to the response objects

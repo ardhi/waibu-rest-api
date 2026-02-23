@@ -108,8 +108,9 @@ async function factory (pkgName) {
         const { forOwn, get } = this.app.lib._
         const newData = {}
         forOwn(data, (v, k) => {
-          let key = get(this.config, `responseKey.${k}`, k)
+          let key = get(this.config, `responseKey.${k}`)
           if (options.forFind && k === 'data') key = get(this.config, 'responseKey.data')
+          if (!key) return undefined
           newData[key] = v
         })
         return newData
