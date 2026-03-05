@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-05
+
+- [2.6.0] Add transaction support by setting property ```transaction: true``` on model's route handler definition
+
 ## 2026-02-23
 
 - [2.5.1] Bug fix on ```transformResult()```
