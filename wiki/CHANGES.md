@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-06
+
+- [2.6.1] Bug fix on schema enforcement. Only apply when it's stated explicitely in route handler
+
 ## 2026-03-05
 
 - [2.6.0] Add transaction support by setting property ```transaction: true``` on model's route handler definition
