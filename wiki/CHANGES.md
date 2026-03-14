@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-14
+
+- [2.7.0] Accept model's name from ```req.params``` in ```route-by-model-builder.js```
+
 ## 2026-03-06
 
 - [2.6.1] Bug fix on schema enforcement. Only apply when it's stated explicitely in route handler
