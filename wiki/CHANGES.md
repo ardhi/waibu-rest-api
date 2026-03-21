@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-22
+
+- [2.7.1] bug fix in reference records
+
 ## 2026-03-14
 
 - [2.7.0] Accept model's name from ```req.params``` in ```route-by-model-builder.js```
