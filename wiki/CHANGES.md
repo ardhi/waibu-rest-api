@@ -3,6 +3,7 @@
 ## 2026-03-22
 
 - [2.7.1] bug fix in reference records
+- [2.7.2] Bug fix in applying routes to ```webCtx```
 
 ## 2026-03-14
 

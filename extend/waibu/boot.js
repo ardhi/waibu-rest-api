@@ -79,8 +79,8 @@ const boot = {
               mod.config.pathReroutedTo = rpath
               this.log.warn('rerouted%s%s', `${prefix}${fullPath}`, `${prefix}${rpath}`)
               mod.url = me.config.format.asExt ? formatExt(rpath) : rpath
-              await me.webAppCtx.route(mod)
-            } else await appCtx.route(mod)
+              me.webAppCtx.route(mod)
+            } else appCtx.route(mod)
           }
         }
       }, { prefix: appPrefix })
