@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-30
+
+- [2.8.0] Add inter site module support
+
 ## 2026-03-22
 
 - [2.7.1] bug fix in reference records
