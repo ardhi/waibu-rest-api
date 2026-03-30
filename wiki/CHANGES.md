@@ -3,6 +3,11 @@
 ## 2026-03-30
 
 - [2.8.0] Add inter site module support
+- [2.8.1] Bug fix in ```options.limit```, removed due to use ```findAllRecords()```
+- [2.9.0] Add support to show warnings through headers ```X-Warnings```
+- [2.9.0] Add support for ```dobo.hardCap``` when ```count``` is requested
+- [2.9.0] By default now ALWAYS request ```count``` which can be turned off with through headers ```X-NoCount```
+
 
 ## 2026-03-22
 

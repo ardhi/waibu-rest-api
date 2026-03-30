@@ -143,6 +143,7 @@ async function factory (pkgName) {
         const { each, keys, omit, get } = this.app.lib._
         const cfg = this.config
         const cfgWdb = this.app.waibuDb.config
+        if (!options.showWarnings) delete data.warnings
         if (reply) {
           reply.code(req.method.toUpperCase() === 'POST' ? 201 : 200)
           if (cfgWdb.dbModel.dataOnly) {
