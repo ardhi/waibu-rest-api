@@ -60,6 +60,7 @@ async function factory (pkgName) {
           statusCode: 'code',
           error: 'error',
           cached: 'cached',
+          hardCapped: 'hardCapped',
           message: 'message',
           warnings: 'warnings',
           details: 'details'
@@ -105,6 +106,7 @@ async function factory (pkgName) {
 
     transformResult = ({ data, req, reply, options = {} }) => {
       const reformat = ({ data, req, reply, options = {} }) => {
+        // console.log(data)
         const { forOwn, get } = this.app.lib._
         const newData = {}
         forOwn(data, (v, k) => {

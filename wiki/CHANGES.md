@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-04-02
+
+- [2.9.1] Add missing ```hardCapped``` key
+
 ## 2026-03-30
 
 - [2.8.0] Add inter site module support
