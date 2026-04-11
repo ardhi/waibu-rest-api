@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-04-11
+
+- [2.10.0] Add support to format output values using header ```X-Format-Value```
+- [2.10.0] Add support to retain original value using header ```X-Retain-Original``` if above key is ```true```
+
 ## 2026-04-02
 
 - [2.9.1] Add missing ```hardCapped``` key
