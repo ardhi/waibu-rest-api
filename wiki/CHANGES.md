@@ -1,5 +1,11 @@
 # Changes
 
+## 2026-04-25
+
+- [2.11.0] Change options to format value using the new key set by dobo
+- [2.11.0] Remove ```options.retainOriginalValue``` since it is not needed anymore
+- [2.11.0] Change related header to ```X-Fmt```
+
 ## 2026-04-11
 
 - [2.10.0] Add support to format output values using header ```X-Format-Value```
