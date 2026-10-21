@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-10-21
+
+- [2.15.0] Add support for `_attachments`
+
 ## 2026-09-05
 
 - [2.14.2] Bug fix in `_routeByModelBuilder()` for aggregate/histogram endpoint
