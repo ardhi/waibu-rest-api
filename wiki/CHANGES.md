@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-11-10
+
+- [2.16.0] Remove all module context and start using one `webAppCtx`
+
 ## 2026-10-21
 
 - [2.15.0] Add support for `_attachments`

@@ -57,13 +57,13 @@ async function factory (pkgName) {
      * @returns {string} The generated route path
      */
     routePath = (name, { defFormat = '.json', uriEncoded = true } = {}) => {
-      const { get, trimStart } = this.app.lib._
       const { fullPath, ns } = this.app.bajo.breakNsPath(name)
-      const prefix = get(this.app[ns], 'config.waibu.prefix', this.app[ns].alias)
+      const { getPluginPrefix, cleanPath } = this.app.waibu
+      const prefix = getPluginPrefix(this.app[ns], 'waibuRestApi')
       const format = defFormat === false ? '' : (this.config.format.asExt ? defFormat : '')
       let path = `/${this.config.waibu.prefix}/${prefix}${fullPath}${format}`
       if (uriEncoded) path = path.split('/').map(p => encodeURI(p)).join('/')
-      return '/' + trimStart(path, '/')
+      return cleanPath(path)
     }
 
     /**
@@ -577,7 +577,6 @@ async function factory (pkgName) {
      * @method
      * @param {Object} options - The options for building the route
      * @param {string} options.file - The file path of the route configuration
-     * @param {Object} options.appCtx - The application context
      * @param {string} options.dir - The directory of the route configuration
      * @param {string} options.pathPrefix - The path prefix for the route
      * @param {string} options.ns - The namespace
@@ -586,7 +585,7 @@ async function factory (pkgName) {
      * @returns {Object} The built route
      */
     _routeByVerb = async (options) => {
-      const { file, appCtx, dir, pathPrefix, ns, alias, parent } = options
+      const { file, dir, pathPrefix, ns, alias, parent } = options
       const me = this
       const url = path.dirname(file).replace(`${dir}/extend/${pathPrefix}`, '')
         .replaceAll('@@', '*').replaceAll('@', ':')
@@ -620,7 +619,7 @@ async function factory (pkgName) {
         $ref: '5xxResp#'
       }
       if (action === 'find') defSchema.querystring = { $ref: 'qsFilter#' }
-      if (isFunction(mod.schema)) mod.schema = await mod.schema.call(this, appCtx)
+      if (isFunction(mod.schema)) mod.schema = await mod.schema.call(this)
       mod.schema = merge({}, defSchema, mod.schema ?? {})
       const oldHandler = mod.handler
       mod.handler = async function (req, reply) {
