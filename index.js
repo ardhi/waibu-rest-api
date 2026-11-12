@@ -59,7 +59,7 @@ async function factory (pkgName) {
     routePath = (name, { defFormat = '.json', uriEncoded = true } = {}) => {
       const { fullPath, ns } = this.app.bajo.breakNsPath(name)
       const { getPluginPrefix, cleanPath } = this.app.waibu
-      const prefix = getPluginPrefix(this.app[ns], 'waibuRestApi')
+      const prefix = getPluginPrefix(ns, 'waibuRestApi')
       const format = defFormat === false ? '' : (this.config.format.asExt ? defFormat : '')
       let path = `/${this.config.waibu.prefix}/${prefix}${fullPath}${format}`
       if (uriEncoded) path = path.split('/').map(p => encodeURI(p)).join('/')

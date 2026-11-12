@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-11-12
+
+- [2.16.1] Bug fix in `routePath()`
+
 ## 2026-11-10
 
 - [2.16.0] Remove all module context and start using one `webAppCtx`
