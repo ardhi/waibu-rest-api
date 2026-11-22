@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-11-22
+
+- [2.16.2] Bug fix in `lib.extractHeaders()`
+
 ## 2026-11-12
 
 - [2.16.1] Bug fix in `routePath()`
